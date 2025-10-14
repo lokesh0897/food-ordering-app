@@ -12,9 +12,6 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
-# Copy the rest of the source code
-COPY src ./src
-
 # Build the application. The Spring Boot plugin packages the app into a JAR.
 # The variable 'order-delivery-app-0.0.1-SNAPSHOT.jar' matches the artifactId and version from your pom.xml.
 RUN mvn package 
