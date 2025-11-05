@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # Name of the service
+  name: food-delivery-app-service
+spec:
+  # Selects the pods created by the deployment (matching the labels)
+  selector:
+    app: food-delivery-app
+  # Type of Service: LoadBalancer for external access, or ClusterIP for internal access only
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      # The port Kubernetes exposes the service on
+      port: 80
+      # The target port of the container (matching containerPort in deployment.yaml)
+      targetPort: 8080
+      # The port used when Type is NodePort (optional)
+      nodePort: 30080
