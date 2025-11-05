@@ -1,0 +1,17 @@
+package com.foodorder.fooddeliveryapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+// @SpringBootApplication is a convenience annotation that adds:
+// 1. @Configuration: Tags the class as a source of bean definitions.
+// 2. @EnableAutoConfiguration: Tells Spring Boot to start adding beans based on classpath settings.
+// 3. @ComponentScan: Tells Spring to look for other components, configurations, and services in the com.foodorder.fooddeliveryapp package.
+@SpringBootApplication
+public class FoodDeliveryApplication {
+
+    public static void main(String[] args) {
+        // This is the static method that launches the application
+        SpringApplication.run(FoodDeliveryApplication.class, args);
+    }
+}
