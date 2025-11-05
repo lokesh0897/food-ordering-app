@@ -1,0 +1,43 @@
+package com.foodorder.fooddeliveryapp.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
+
+// @RestController combines @Controller and @ResponseBody, making this class
+// handle incoming web requests and return data (usually JSON/XML) directly.
+@RestController
+@RequestMapping("/api/orders") // Base path for all methods in this controller
+public class OrderController {
+
+    /**
+     * Handles HTTP GET requests to /api/orders
+     * @return A simple confirmation message
+     */
+    @GetMapping
+    public String getAllOrders() {
+        return "List of all current and historical food orders (To be implemented).";
+    }
+
+    /**
+     * Handles HTTP POST requests to /api/orders
+     * This simulates receiving a new order payload (JSON body)
+     * @param orderData The JSON body of the request, automatically mapped to a Map
+     * @return A confirmation response
+     */
+    @PostMapping
+    public String placeNewOrder(@RequestBody Map<String, Object> orderData) {
+        // In a real application, you would:
+        // 1. Validate the orderData
+        // 2. Save it to a database (using a Service/Repository layer)
+        // 3. Trigger a delivery workflow
+        
+        String dish = (String) orderData.get("dish");
+        Integer quantity = (Integer) orderData.get("quantity");
+
+        return String.format("Order received for: %d x %s. Tracking ID: #12345.", quantity, dish);
+    }
+}
