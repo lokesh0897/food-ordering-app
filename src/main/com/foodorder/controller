@@ -1,43 +1,72 @@
-package com.foodorder.fooddeliveryapp.controller;
+// Note: This file should be placed in src/main/java/com/catering/
+package com.catering;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.Map;
 
-// @RestController combines @Controller and @ResponseBody, making this class
-// handle incoming web requests and return data (usually JSON/XML) directly.
-@RestController
-@RequestMapping("/api/orders") // Base path for all methods in this controller
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Simple Spring MVC Controller to handle the main page view.
+ */
+@Controller
 public class OrderController {
 
     /**
-     * Handles HTTP GET requests to /api/orders
-     * @return A simple confirmation message
+     * Handles requests to the root URL and prepares data for the JSP view.
      */
-    @GetMapping
-    public String getAllOrders() {
-        return "List of all current and historical food orders (To be implemented).";
-    }
+    @GetMapping("/")
+    public String viewOrders(Model model) {
+        // Mock data representing a list of current food orders
+        List<Order> orders = Arrays.asList(
+            new Order("O-1001", "Chicken Marsala (Qty: 5)", "Pending", "Jane Doe"),
+            new Order("O-1002", "Veggie Lasagna (Qty: 2)", "In Preparation", "John Smith"),
+            new Order("O-1003", "Seafood Paella (Qty: 8)", "Ready for Delivery", "Alice Johnson")
+        );
 
-    /**
-     * Handles HTTP POST requests to /api/orders
-     * This simulates receiving a new order payload (JSON body)
-     * @param orderData The JSON body of the request, automatically mapped to a Map
-     * @return A confirmation response
-     */
-    @PostMapping
-    public String placeNewOrder(@RequestBody Map<String, Object> orderData) {
-        // In a real application, you would:
-        // 1. Validate the orderData
-        // 2. Save it to a database (using a Service/Repository layer)
-        // 3. Trigger a delivery workflow
+        model.addAttribute("appName", "Catering Delivery Management System");
+        model.addAttribute("orderList", orders);
         
-        String dish = (String) orderData.get("dish");
-        Integer quantity = (Integer) orderData.get("quantity");
-
-        return String.format("Order received for: %d x %s. Tracking ID: #12345.", quantity, dish);
+        // This returns the name of the JSP file located in src/main/webapp/WEB-INF/jsp/
+        return "index"; 
     }
 }
+
+/**
+ * Simple Java POJO (Plain Old Java Object) for Order data.
+ */
+class Order {
+    private String id;
+    private String details;
+    private String status;
+    private String customerName;
+
+    public Order(String id, String details, String status, String customerName) {
+        this.id = id;
+        this.details = details;
+        this.status = status;
+        this.customerName = customerName;
+    }
+
+    // Getters used by the JSP file
+    public String getId() { return id; }
+    public String getDetails() { return details; }
+    public String getStatus() { return status; }
+    public String getCustomerName() { return customerName; }
+}
+
+// A simple main application class is also needed, but for brevity in this request,
+// we assume a standard SpringBootApplication class exists in the package root.
+/*
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class FoodDeliveryAppApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(FoodDeliveryAppApplication.class, args);
+    }
+}
+*/
